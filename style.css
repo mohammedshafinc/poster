@@ -1,0 +1,119 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  padding: 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.certificate-poster {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  aspect-ratio: 5 / 7;
+  background: url('./Blue Political Election Poster.png') no-repeat center center;
+  background-size: cover;
+  margin: 20px auto;
+}
+
+/* Circle photo placement */
+.poster-frame {
+  position: absolute;
+  top: 14%; /* Responsive positioning */
+  left: 25%;
+  width: 40%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.poster-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Upload styling */
+.upload-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.upload-container h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+#imageUpload {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#imageUpload::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+#imageUpload::before {
+  content: 'Choose Image';
+  display: inline-block;
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#imageUpload:hover::before {
+  background-color: #0056b3;
+}
+
+#downloadBtn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* 🔁 Media Queries */
+@media screen and (max-width: 600px) {
+  .poster-frame {
+    top: 14%;
+    left: 30%;
+    width: 40%;
+  }
+
+  .upload-container h2 {
+    font-size: 20px;
+  }
+
+  #imageUpload::before {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  #downloadBtn {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}

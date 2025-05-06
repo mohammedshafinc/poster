@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Participation Poster</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <div class="upload-container">
+      <h2>Upload Your Photo</h2>
+      <input type="file" id="imageUpload" accept="image/*">
+    </div>
+    
+
+    <div id="certificate" class="certificate-poster">
+      <!-- User photo goes here -->
+      <div class="poster-frame">
+        <img id="uploadedImage" />
+      </div>
+    </div>
+
+    <button id="downloadBtn">Download Poster</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
