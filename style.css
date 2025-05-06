@@ -45,8 +45,11 @@ body {
 
 /* Upload styling */
 .upload-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 30px auto 0 auto;
+  box-sizing: border-box;
   text-align: center;
-  margin-top: 30px;
 }
 
 .upload-container h2 {
@@ -56,6 +59,10 @@ body {
 }
 
 #imageUpload {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  margin: 0 auto;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -107,9 +114,15 @@ body {
     font-size: 20px;
   }
 
+  .upload-container {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
   #imageUpload::before {
-    font-size: 14px;
-    padding: 8px 16px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
   }
 
   #downloadBtn {
