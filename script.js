@@ -29,18 +29,6 @@ document.getElementById("imageUpload").addEventListener("change", function(event
 });
 
 // Download the poster with high quality
-document.getElementById("imageUpload").addEventListener("change", function (event) {
-  const reader = new FileReader();
-  reader.onload = function () {
-    const img = document.getElementById("uploadedImage");
-    img.onload = () => {
-      console.log("Image loaded and ready.");
-    };
-    img.src = reader.result;
-  };
-  reader.readAsDataURL(event.target.files[0]);
-});
-
 document.getElementById("downloadBtn").addEventListener("click", function () {
   const certificate = document.getElementById("certificate");
   const posterFrame = document.querySelector(".poster-frame");
@@ -51,23 +39,21 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     borderRadius: posterFrame.style.borderRadius,
     transform: certificate.style.transform,
     width: certificate.style.width,
-    height: certificate.style.height,
-    aspectRatio: certificate.style.aspectRatio,
+    height: certificate.style.height
   };
 
-  // Temporarily remove clipping and aspect ratio
+  // Temporarily disable clipping styles
   posterFrame.style.overflow = "visible";
   posterFrame.style.borderRadius = "0";
   certificate.style.transform = "none";
-  certificate.style.aspectRatio = "auto";
 
-  // Use html2canvas with fixed higher size for mobile clarity
-  const scaleFactor = 3;
+  // Use a higher scale based on devicePixelRatio for mobile clarity
+  const scaleFactor = window.devicePixelRatio || 2;
+
   html2canvas(certificate, {
-    width: certificate.offsetWidth * scaleFactor,
-    height: certificate.offsetHeight * scaleFactor,
-    scale: scaleFactor,
+    scale: scaleFactor, // Make use of screen DPR
     useCORS: true,
+    allowTaint: true,
     backgroundColor: null,
     logging: false,
     onclone: function (clonedDoc) {
@@ -77,40 +63,30 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
         clonedCertificate.style.webkitFontSmoothing = "antialiased";
         clonedCertificate.style.mozOsxFontSmoothing = "grayscale";
       }
-    },
-  })
-    .then((canvas) => {
-      // Optional: redraw onto fresh canvas for guaranteed clarity
-      const finalCanvas = document.createElement("canvas");
-      finalCanvas.width = canvas.width;
-      finalCanvas.height = canvas.height;
-      const ctx = finalCanvas.getContext("2d");
-      ctx.drawImage(canvas, 0, 0, finalCanvas.width, finalCanvas.height);
-
-      // Restore original styles
-      Object.assign(posterFrame.style, {
-        overflow: originalStyles.overflow,
-        borderRadius: originalStyles.borderRadius,
-      });
-      Object.assign(certificate.style, {
-        transform: originalStyles.transform,
-        width: originalStyles.width,
-        height: originalStyles.height,
-        aspectRatio: originalStyles.aspectRatio,
-      });
-
-      // Download high-quality PNG
-      const link = document.createElement("a");
-      link.download = "participation-certificate.png";
-      link.href = finalCanvas.toDataURL("image/png", 1.0);
-      link.click();
-    })
-    .catch((err) => {
-      console.error("Error generating image:", err);
-      // Restore styles even on error
-      Object.assign(posterFrame.style, {
-        overflow: originalStyles.overflow,
-        borderRadius: originalStyles.borderRadius,
-      });
+    }
+  }).then(canvas => {
+    // Restore styles
+    Object.assign(posterFrame.style, {
+      overflow: originalStyles.overflow,
+      borderRadius: originalStyles.borderRadius
     });
+    Object.assign(certificate.style, {
+      transform: originalStyles.transform,
+      width: originalStyles.width,
+      height: originalStyles.height
+    });
+
+    // Save as high-quality PNG
+    const link = document.createElement("a");
+    link.download = "participation-certificate.png";
+    link.href = canvas.toDataURL("image/png", 1.0);
+    link.click();
+  }).catch(err => {
+    console.error("Download error:", err);
+    // Restore styles even on error
+    Object.assign(posterFrame.style, {
+      overflow: originalStyles.overflow,
+      borderRadius: originalStyles.borderRadius
+    });
+  });
 });
